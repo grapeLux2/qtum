@@ -73,7 +73,7 @@
 // Application startup time (used for uptime calculation)
 const int64_t nStartupTime = GetTime();
 
-const char * const BITCOIN_CONF_FILENAME = "qtum.conf";
+const char * const BITCOIN_CONF_FILENAME = "lux.conf";
 
 ArgsManager gArgs;
 
@@ -680,13 +680,13 @@ void PrintExceptionContinue(const std::exception* pex, const char* pszThread)
 
 fs::path GetDefaultDataDir()
 {
-    // Windows < Vista: C:\Documents and Settings\Username\Application Data\Qtum
-    // Windows >= Vista: C:\Users\Username\AppData\Roaming\Qtum
-    // Mac: ~/Library/Application Support/Qtum
-    // Unix: ~/.qtum
+    // Windows < Vista: C:\Documents and Settings\Username\Application Data\Lux
+    // Windows >= Vista: C:\Users\Username\AppData\Roaming\Lux
+    // Mac: ~/Library/Application Support/Lux
+    // Unix: ~/.lux
 #ifdef WIN32
     // Windows
-    return GetSpecialFolderPath(CSIDL_APPDATA) / "Qtum";
+    return GetSpecialFolderPath(CSIDL_APPDATA) / "Lux";
 #else
     fs::path pathRet;
     char* pszHome = getenv("HOME");
@@ -696,10 +696,10 @@ fs::path GetDefaultDataDir()
         pathRet = fs::path(pszHome);
 #ifdef MAC_OSX
     // Mac
-    return pathRet / "Library/Application Support/Qtum";
+    return pathRet / "Library/Application Support/Lux";
 #else
     // Unix
-    return pathRet / ".qtum";
+    return pathRet / ".lux";
 #endif
 #endif
 }
@@ -1208,8 +1208,8 @@ std::string CopyrightHolders(const std::string& strPrefix)
     std::string strCopyrightHolders = strPrefix + strprintf(_(COPYRIGHT_HOLDERS), _(COPYRIGHT_HOLDERS_SUBSTITUTION));
 
     // Check for untranslated substitution to make sure Bitcoin Core copyright is not removed by accident
-    if (strprintf(COPYRIGHT_HOLDERS, COPYRIGHT_HOLDERS_SUBSTITUTION).find("Qtum Core") == std::string::npos) {
-        strCopyrightHolders += "\n" + strPrefix + "The Qtum Core developers";
+    if (strprintf(COPYRIGHT_HOLDERS, COPYRIGHT_HOLDERS_SUBSTITUTION).find("Lux Core") == std::string::npos) {
+        strCopyrightHolders += "\n" + strPrefix + "The Lux Core developers";
     }
     return strCopyrightHolders;
 }

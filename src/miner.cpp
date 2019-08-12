@@ -214,18 +214,18 @@ std::unique_ptr<CBlockTemplate> BlockAssembler::CreateNewBlock(const CScript& sc
 
     }
 
-    //////////////////////////////////////////////////////// qtum
-    QtumDGP qtumDGP(globalState.get(), fGettingValuesDGP);
-    globalSealEngine->setQtumSchedule(qtumDGP.getGasSchedule(nHeight));
-    uint32_t blockSizeDGP = qtumDGP.getBlockSize(nHeight);
-    minGasPrice = qtumDGP.getMinGasPrice(nHeight);
+    //////////////////////////////////////////////////////// lux
+    LuxDGP luxDGP(globalState.get(), fGettingValuesDGP);
+    globalSealEngine->setLuxSchedule(luxDGP.getGasSchedule(nHeight));
+    uint32_t blockSizeDGP = luxDGP.getBlockSize(nHeight);
+    minGasPrice = luxDGP.getMinGasPrice(nHeight);
     if(gArgs.IsArgSet("-staker-min-tx-gas-price")) {
         CAmount stakerMinGasPrice;
         if(ParseMoney(gArgs.GetArg("-staker-min-tx-gas-price", ""), stakerMinGasPrice)) {
             minGasPrice = std::max(minGasPrice, (uint64_t)stakerMinGasPrice);
         }
     }
-    hardBlockGasLimit = qtumDGP.getBlockGasLimit(nHeight);
+    hardBlockGasLimit = luxDGP.getBlockGasLimit(nHeight);
     softBlockGasLimit = gArgs.GetArg("-staker-soft-block-gas-limit", hardBlockGasLimit);
     softBlockGasLimit = std::min(softBlockGasLimit, hardBlockGasLimit);
     txGasLimit = gArgs.GetArg("-staker-max-tx-gas-limit", softBlockGasLimit);
@@ -356,7 +356,7 @@ std::unique_ptr<CBlockTemplate> BlockAssembler::CreateEmptyBlock(const CScript& 
         pblock->prevoutStake.n=0;
     }
 
-    //////////////////////////////////////////////////////// qtum
+    //////////////////////////////////////////////////////// lux
     //state shouldn't change here for an empty block, but if it's not valid it'll fail in CheckBlock later
     pblock->hashStateRoot = uint256(h256Touint(dev::h256(globalState->rootHash())));
     pblock->hashUTXORoot = uint256(h256Touint(dev::h256(globalState->rootHashUTXO())));
@@ -440,34 +440,34 @@ bool BlockAssembler::AttemptToAddContractToBlock(CTxMemPool::txiter iter, uint64
     uint64_t nBlockWeight = this->nBlockWeight;
     uint64_t nBlockSigOpsCost = this->nBlockSigOpsCost;
 
-    QtumTxConverter convert(iter->GetTx(), NULL, &pblock->vtx);
+    LuxTxConverter convert(iter->GetTx(), NULL, &pblock->vtx);
 
-    ExtractQtumTX resultConverter;
-    if(!convert.extractionQtumTransactions(resultConverter)){
+    ExtractLuxTX resultConverter;
+    if(!convert.extractionLuxTransactions(resultConverter)){
         //this check already happens when accepting txs into mempool
         //therefore, this can only be triggered by using raw transactions on the staker itself
         return false;
     }
-    std::vector<QtumTransaction> qtumTransactions = resultConverter.first;
+    std::vector<LuxTransaction> luxTransactions = resultConverter.first;
     dev::u256 txGas = 0;
-    for(QtumTransaction qtumTransaction : qtumTransactions){
-        txGas += qtumTransaction.gas();
+    for(LuxTransaction luxTransaction : luxTransactions){
+        txGas += luxTransaction.gas();
         if(txGas > txGasLimit) {
             // Limit the tx gas limit by the soft limit if such a limit has been specified.
             return false;
         }
 
-        if(bceResult.usedGas + qtumTransaction.gas() > softBlockGasLimit){
+        if(bceResult.usedGas + luxTransaction.gas() > softBlockGasLimit){
             //if this transaction's gasLimit could cause block gas limit to be exceeded, then don't add it
             return false;
         }
-        if(qtumTransaction.gasPrice() < minGasPrice){
+        if(luxTransaction.gasPrice() < minGasPrice){
             //if this transaction's gasPrice is less than the current DGP minGasPrice don't add it
             return false;
         }
     }
     // We need to pass the DGP's block gas limit (not the soft limit) since it is consensus critical.
-    ByteCodeExec exec(*pblock, qtumTransactions, hardBlockGasLimit, chainActive.Tip());
+    ByteCodeExec exec(*pblock, luxTransactions, hardBlockGasLimit, chainActive.Tip());
     if(!exec.performByteCode()){
         //error, don't add contract
         globalState->setRoot(oldHashStateRoot);
@@ -876,7 +876,7 @@ void ThreadStakeMiner(CWallet *pwallet, CConnman* connman)
     SetThreadPriority(THREAD_PRIORITY_LOWEST);
 
     // Make this thread recognisable as the mining thread
-    std::string threadName = "qtumstake";
+    std::string threadName = "luxstake";
     if(pwallet && pwallet->GetName() != "")
     {
         threadName = threadName + "-" + pwallet->GetName();
@@ -1012,7 +1012,7 @@ void ThreadStakeMiner(CWallet *pwallet, CConnman* connman)
     }
 }
 
-void StakeQtums(bool fStake, CWallet *pwallet, CConnman* connman, boost::thread_group*& stakeThread)
+void StakeLuxs(bool fStake, CWallet *pwallet, CConnman* connman, boost::thread_group*& stakeThread)
 {
     if (stakeThread != nullptr)
     {

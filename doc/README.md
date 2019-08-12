@@ -1,30 +1,30 @@
-Qtum Core
+Lux Core
 =============
 
 Setup
 ---------------------
-Qtum Core is the original Qtum client and it builds the backbone of the network. It downloads and, by default, stores the entire history of Qtum transactions (which is currently several GBs); depending on the speed of your computer and network connection, the synchronization process can take anywhere from a few hours to a day or more.
+Lux Core is the original Lux client and it builds the backbone of the network. It downloads and, by default, stores the entire history of Lux transactions (which is currently several GBs); depending on the speed of your computer and network connection, the synchronization process can take anywhere from a few hours to a day or more.
 
-To download Qtum Core, visit [qtumcore.org](https://www.qtumcore.org/).
+To download Lux Core, visit [luxcore.org](https://www.luxcore.org/).
 
 Running
 ---------------------
-The following are some helpful notes on how to run Qtum Core on your native platform.
+The following are some helpful notes on how to run Lux Core on your native platform.
 
 ### Unix
 
 Unpack the files into a directory and run:
 
-- `bin/qtum-qt` (GUI) or
-- `bin/qtumd` (headless)
+- `bin/lux-qt` (GUI) or
+- `bin/luxd` (headless)
 
 ### Windows
 
-Unpack the files into a directory, and then run qtum-qt.exe.
+Unpack the files into a directory, and then run lux-qt.exe.
 
 ### macOS
 
-Drag Qtum Core to your applications folder, and then run Qtum Core.
+Drag Lux Core to your applications folder, and then run Lux Core.
 
 ### Need Help?
 

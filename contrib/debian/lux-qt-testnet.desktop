@@ -1,0 +1,12 @@
+[Desktop Entry]
+Version=0.17.6
+Name=Lux Core Testnet
+Comment=Connect to the Lux P2P Network Testnet
+Exec=lux-qt -testnet %u
+Terminal=false
+Type=Application
+Icon=luxtestnet128
+MimeType=x-scheme-handler/lux;
+Categories=Network;
+StartupWMClass=Lux-qt-testnet
+Name[en_US]=lux-qt-testnet

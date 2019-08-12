@@ -40,7 +40,7 @@ class HelpMessageDialog;
 class ModalOverlay;
 class TitleBar;
 class NavigationBar;
-class QtumVersionChecker;
+class LuxVersionChecker;
 
 namespace interfaces {
 class Handler;
@@ -161,7 +161,7 @@ private:
     QAction* createContractAction = nullptr;
     QAction* sendToContractAction = nullptr;
     QAction* callContractAction = nullptr;
-    QAction* QRCTokenAction = nullptr;
+    QAction* LRCTokenAction = nullptr;
     QAction* sendTokenAction = nullptr;
     QAction* receiveTokenAction = nullptr;
     QAction* addTokenAction = nullptr;
@@ -181,7 +181,7 @@ private:
     HelpMessageDialog* helpMessageDialog = nullptr;
     ModalOverlay* modalOverlay = nullptr;
     ModalOverlay *modalBackupOverlay = nullptr;
-    QtumVersionChecker *qtumVersionChecker = nullptr;
+    LuxVersionChecker *luxVersionChecker = nullptr;
 
 #ifdef Q_OS_MAC
     CAppNapInhibitor* m_app_nap_inhibitor = nullptr;

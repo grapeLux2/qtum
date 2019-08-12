@@ -5393,14 +5393,14 @@ bool CWallet::LoadContractData(const std::string &address, const std::string &ke
     return ret;
 }
 
-void CWallet::StakeQtums(bool fStake, CConnman* connman)
+void CWallet::StakeLuxs(bool fStake, CConnman* connman)
 {
-    ::StakeQtums(fStake, this, connman, stakeThread);
+    ::StakeLuxs(fStake, this, connman, stakeThread);
 }
 
 void CWallet::StartStake(CConnman *connman)
 {
-    StakeQtums(true, connman);
+    StakeLuxs(true, connman);
 }
 
 void CWallet::StopStake()
@@ -5409,7 +5409,7 @@ void CWallet::StopStake()
     {
         auto locked_chain = chain().lock();
         LOCK(cs_wallet);
-        StakeQtums(false, 0);
+        StakeLuxs(false, 0);
     }
     stakeThread = 0;
 }

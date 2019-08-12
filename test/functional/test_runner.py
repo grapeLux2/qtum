@@ -192,50 +192,50 @@ BASE_SCRIPTS = [
     # Don't append tests at the end to avoid merge conflicts
     # Put them in a random line within the section that fits their approximate run-time
 
-    # qtum
-    'qtum_dgp.py',
-    'qtum_pos.py',
-    'qtum_opcall.py',
-    'qtum_opcreate.py',
-    'qtum_8mb_block.py',
-    'qtum_gas_limit.py',
-    'qtum_searchlog.py',
-    'qtum_pos_segwit.py',
-    'qtum_state_root.py',
-    'qtum_evm_globals.py',
-    'qtum_null_sender.py',
-    'qtum_waitforlogs.py',
-    'qtum_block_header.py',
-    'qtum_callcontract.py',
-    'qtum_spend_op_call.py',
-    'qtum_condensing_txs.py',
-    'qtum_createcontract.py',
-    'qtum_sendtocontract.py',
-    'qtum_identical_refunds.py',
-    'qtum_create_eth_op_code.py',
-    'qtum_gas_limit_overflow.py',
-    'qtum_call_empty_contract.py',
-    'qtum_dgp_block_size_sync.py',
-    'qtum_pos_conflicting_txs.py',
-    'qtum_globals_state_changer.py',
-    'qtum_no_exec_call_disabled.py',
-    'qtum_soft_block_gas_limits.py',
-    'qtum_dgp_block_size_restart.py',
-    'qtum_searchlog_restart_node.py',
-    'qtum_immature_coinstake_spend.py',
-    'qtum_transaction_prioritization.py',
-    'qtum_assign_mpos_fees_to_gas_refund.py',
-    'qtum_ignore_mpos_participant_reward.py',
-    'qtum_many_value_refunds_from_same_tx.py',
-    'qtum_combined_outputs_exceed_gas_limit.py',
-    'qtum_dgp_gas_price_lingering_mempool_tx.py',
-    'qtum_header_spam.py',
-    'qtum_divergence_dos.py',
-    'qtum_prioritize_create_over_call.py',
-    'qtum_callcontract_timestamp.py',
-    'qtum_transaction_receipt_origin_contract_address.py',
-    'qtum_block_number_corruption.py',
-    'qtum_duplicate_stake.py',
+    # lux
+    'lux_dgp.py',
+    'lux_pos.py',
+    'lux_opcall.py',
+    'lux_opcreate.py',
+    'lux_8mb_block.py',
+    'lux_gas_limit.py',
+    'lux_searchlog.py',
+    'lux_pos_segwit.py',
+    'lux_state_root.py',
+    'lux_evm_globals.py',
+    'lux_null_sender.py',
+    'lux_waitforlogs.py',
+    'lux_block_header.py',
+    'lux_callcontract.py',
+    'lux_spend_op_call.py',
+    'lux_condensing_txs.py',
+    'lux_createcontract.py',
+    'lux_sendtocontract.py',
+    'lux_identical_refunds.py',
+    'lux_create_eth_op_code.py',
+    'lux_gas_limit_overflow.py',
+    'lux_call_empty_contract.py',
+    'lux_dgp_block_size_sync.py',
+    'lux_pos_conflicting_txs.py',
+    'lux_globals_state_changer.py',
+    'lux_no_exec_call_disabled.py',
+    'lux_soft_block_gas_limits.py',
+    'lux_dgp_block_size_restart.py',
+    'lux_searchlog_restart_node.py',
+    'lux_immature_coinstake_spend.py',
+    'lux_transaction_prioritization.py',
+    'lux_assign_mpos_fees_to_gas_refund.py',
+    'lux_ignore_mpos_participant_reward.py',
+    'lux_many_value_refunds_from_same_tx.py',
+    'lux_combined_outputs_exceed_gas_limit.py',
+    'lux_dgp_gas_price_lingering_mempool_tx.py',
+    'lux_header_spam.py',
+    'lux_divergence_dos.py',
+    'lux_prioritize_create_over_call.py',
+    'lux_callcontract_timestamp.py',
+    'lux_transaction_receipt_origin_contract_address.py',
+    'lux_block_number_corruption.py',
+    'lux_duplicate_stake.py',
 ]
 
 EXTENDED_SCRIPTS = [
@@ -243,7 +243,7 @@ EXTENDED_SCRIPTS = [
     # Longest test should go first, to favor running tests in parallel
     'feature_pruning.py',
     'feature_dbcrash.py',
-    # Version <4 blocks are never allowed in regtest on qtum
+    # Version <4 blocks are never allowed in regtest on lux
     'p2p_unrequested_blocks.py',
     'feature_dersig.py',
     'feature_cltv.py'
@@ -373,8 +373,8 @@ def run_tests(*, test_list, src_dir, build_dir, tmpdir, jobs=1, enable_coverage=
 
     # Warn if bitcoind is already running (unix only)
     try:
-        if subprocess.check_output(["pidof", "qtumd"]) is not None:
-            print("%sWARNING!%s There is already a qtumd process running on this system. Tests may fail unexpectedly due to resource contention!" % (BOLD[1], BOLD[0]))
+        if subprocess.check_output(["pidof", "luxd"]) is not None:
+            print("%sWARNING!%s There is already a luxd process running on this system. Tests may fail unexpectedly due to resource contention!" % (BOLD[1], BOLD[0]))
     except (OSError, subprocess.SubprocessError):
         pass
 
@@ -600,7 +600,7 @@ class TestResult():
 def check_script_prefixes():
     """Check that test scripts start with one of the allowed name prefixes."""
 
-    good_prefixes_re = re.compile("(example|feature|interface|mempool|mining|p2p|rpc|wallet|tool|qtum)_")
+    good_prefixes_re = re.compile("(example|feature|interface|mempool|mining|p2p|rpc|wallet|tool|lux)_")
     bad_script_names = [script for script in ALL_SCRIPTS if good_prefixes_re.match(script) is None]
 
     if bad_script_names:

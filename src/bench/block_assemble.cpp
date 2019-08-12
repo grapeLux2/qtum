@@ -84,16 +84,16 @@ static void AssembleBlock(benchmark::State& state)
         ::globalSealEngine.reset();
 
         ::fRequireStandard=false;
-        fs::path qtumStateDir = GetDataDir() / "stateQtum";
-        bool fStatus = fs::exists(qtumStateDir);
-        const std::string dirQtum(qtumStateDir.string());
+        fs::path luxStateDir = GetDataDir() / "stateLux";
+        bool fStatus = fs::exists(luxStateDir);
+        const std::string dirLux(luxStateDir.string());
         const dev::h256 hashDB(dev::sha3(dev::rlp("")));
-        dev::eth::BaseState existsQtumstate = fStatus ? dev::eth::BaseState::PreExisting : dev::eth::BaseState::Empty;
-        ::globalState = std::unique_ptr<QtumState>(new QtumState(dev::u256(0), QtumState::openDB(dirQtum, hashDB, dev::WithExisting::Trust), dirQtum, existsQtumstate));
-        dev::eth::ChainParams cp((dev::eth::genesisInfo(dev::eth::Network::qtumMainNetwork)));
+        dev::eth::BaseState existsLuxstate = fStatus ? dev::eth::BaseState::PreExisting : dev::eth::BaseState::Empty;
+        ::globalState = std::unique_ptr<LuxState>(new LuxState(dev::u256(0), LuxState::openDB(dirLux, hashDB, dev::WithExisting::Trust), dirLux, existsLuxstate));
+        dev::eth::ChainParams cp((dev::eth::genesisInfo(dev::eth::Network::luxMainNetwork)));
         ::globalSealEngine = std::unique_ptr<dev::eth::SealEngineFace>(cp.createSealEngine());
 
-        ::pstorageresult.reset(new StorageResults(qtumStateDir.string()));
+        ::pstorageresult.reset(new StorageResults(luxStateDir.string()));
 
         if(chainActive.Tip() != nullptr){
             ::globalState->setRoot(uintToh256(chainActive.Tip()->hashStateRoot));

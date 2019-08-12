@@ -4,13 +4,13 @@ from test_framework.test_framework import BitcoinTestFramework
 from test_framework.util import *
 from test_framework.script import *
 from test_framework.mininode import *
-from test_framework.qtum import *
+from test_framework.lux import *
 from test_framework.blocktools import *
 from test_framework.key import *
 import io
 import time
 
-class QtumPOSSegwitTest(BitcoinTestFramework):
+class LuxPOSSegwitTest(BitcoinTestFramework):
     def set_test_params(self):
         self.setup_clean_chain = True
         self.num_nodes = 1
@@ -148,4 +148,4 @@ class QtumPOSSegwitTest(BitcoinTestFramework):
         assert_equal(self.node.getblockcount(), block_count+1)
 
 if __name__ == '__main__':
-    QtumPOSSegwitTest().main()
+    LuxPOSSegwitTest().main()

@@ -1,0 +1,12 @@
+[Desktop Entry]
+Version=0.17.6
+Name=Lux Core
+Comment=Connect to the Lux P2P Network
+Exec=lux-qt %u
+Terminal=false
+Type=Application
+Icon=lux128
+MimeType=x-scheme-handler/lux;
+Categories=Network;
+StartupWMClass=Lux-qt
+Name[en_US]=lux-qt

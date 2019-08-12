@@ -5,7 +5,7 @@
 """Test deprecation of RPC calls."""
 from test_framework.test_framework import BitcoinTestFramework
 from test_framework.util import assert_raises_rpc_error
-from test_framework.qtum import convert_btc_address_to_qtum
+from test_framework.lux import convert_btc_address_to_lux
 class DeprecatedRpcTest(BitcoinTestFramework):
     def set_test_params(self):
         self.num_nodes = 2

@@ -11,8 +11,8 @@
 #include <util/system.h>
 #include <util/strencodings.h>
 
-#include <qtum/qtumstate.h>
-#include <qtum/qtumtransaction.h>
+#include <lux/luxstate.h>
+#include <lux/luxtransaction.h>
 #include <validation.h>
 
 typedef std::vector<unsigned char> valtype;
@@ -184,7 +184,7 @@ txnouttype Solver(const CScript& scriptPubKey, std::vector<std::vector<unsigned 
                 else
                     break;
             }
-            /////////////////////////////////////////////////////////// qtum
+            /////////////////////////////////////////////////////////// lux
             else if (opcode2 == OP_VERSION)
             {
                 if(0 <= opcode1 && opcode1 <= OP_PUSHDATA4)
@@ -514,7 +514,7 @@ bool ExtractDestination(const COutPoint& prevout, const CScript& scriptPubKey, C
         return true;
     }
     else if (whichType == TX_CREATE) {
-        addressRet = CKeyID(uint160(QtumState::createQtumAddress(uintToh256(prevout.hash), prevout.n).asBytes()));
+        addressRet = CKeyID(uint160(LuxState::createLuxAddress(uintToh256(prevout.hash), prevout.n).asBytes()));
         return true;
     }
     return false;
